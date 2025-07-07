@@ -16,7 +16,7 @@ class BackToProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ToolPanelSection(
-      title: 'Back To Project List'.translate(),
+      title: 'PROJECT PREVIEW'.translate(),
       children: [
         ListTile(
           key: const Key('back-to-projects'),
@@ -26,15 +26,15 @@ class BackToProjectList extends StatelessWidget {
           ),
           onTap: onPressed,
         ),
-        if (isTelegramMiniApp || kDebugMode)
-          ListTile(
-            key: const Key('disable-toolbar'),
-            title: Text('Hide Toolbar'.translate()),
-            trailing: Icon(
-              Icons.hide_source_rounded,
-            ),
-            onTap: projectController.hideToolbar,
-          ),
+        // if (isTelegramMiniApp || kDebugMode)
+        //   ListTile(
+        //     key: const Key('disable-toolbar'),
+        //     title: Text('Hide Toolbar'.translate()),
+        //     trailing: Icon(
+        //       Icons.hide_source_rounded,
+        //     ),
+        //     onTap: projectController.hideToolbar,
+        //   ),
       ],
     );
   }

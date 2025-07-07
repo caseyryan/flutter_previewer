@@ -42,7 +42,7 @@ external void toggleBackButton(bool isEnabled);
 external set _onBackButtonPressed(JSFunction value);
 
 void onBackButtonPressed() {
-  if (projectController.isToolbarVisible) {
+  if (!projectController.isToolbarVisible) {
     projectController.showToolbar();
   } else {
     toggleBackButton(false);
