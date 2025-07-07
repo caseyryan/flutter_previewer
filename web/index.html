@@ -84,8 +84,6 @@
 
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', () => {
-          /// попытка пофиксить корявый ресайз при появлении клавиатуры
-          /// Отложенный resize — через 1 секунду после последнего события
           clearTimeout(resizeTimeout);
           resizeTimeout = setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
@@ -189,9 +187,6 @@
     function hapticFeedbackNotification(type) {
       var hapticFeedback = Telegram.WebApp.HapticFeedback;
       if (hapticFeedback) {
-        // - error, indicates that a task or action has failed,
-        // - success, indicates that a task or action has completed successfully,
-        // - warning, indicates that a task or action produced a warning.
         hapticFeedback.notificationOccurred(type);
       }
     }
@@ -257,5 +252,4 @@
     }
   </script>
 </body>
-
 </html>
