@@ -6,6 +6,7 @@ import 'package:flutter_previewer/localization/translator_builder.dart';
 import 'package:flutter_previewer/project_selection_view/back_to_project_section.dart';
 import 'package:flutter_previewer/project_selection_view/project_selection_view.dart';
 import 'package:flutter_previewer/themes/themes.dart';
+import 'package:flutter_previewer/web_utils/web_utils.dart';
 import 'package:lite_state/lite_state.dart';
 import 'package:provider/provider.dart';
 
@@ -57,21 +58,31 @@ class _MainAppState extends State<MainApp> {
                   ...DevicePreview.defaultTools,
                 ],
                 builder: (context) {
-                  final store = context.read<DevicePreviewStore>();
                   try {
+                    final store = context.read<DevicePreviewStore>();
                     final isEnabled = store.data.isEnabled;
                     controller.setFrameEnabled(isEnabled);
                     // debugPrint('isEnabled: $isEnabled');
                   } catch (_) {}
-                  return MaterialApp(
-                    // ignore: deprecated_member_use
-                    useInheritedMediaQuery: true,
-                    debugShowCheckedModeBanner: true,
-                    locale: DevicePreview.locale(context),
-                    builder: DevicePreview.appBuilder,
-                    theme: lightTheme,
-                    darkTheme: darkTheme,
-                    home: controller.selectedProject!.builder(context),
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: MaterialApp(
+                          // ignore: deprecated_member_use
+                          useInheritedMediaQuery: true,
+                          debugShowCheckedModeBanner: true,
+                          locale: DevicePreview.locale(context),
+                          builder: DevicePreview.appBuilder,
+                          theme: lightTheme,
+                          darkTheme: darkTheme,
+                          home: controller.selectedProject!.builder(context),
+                        ),
+                      ),
+                      if (WebUtils.isWebIos)
+                        const SizedBox(
+                          height: 44.0,
+                        ),
+                    ],
                   );
                 },
               ),
