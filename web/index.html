@@ -1,38 +1,261 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Serov.Dev">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="flutter_previewer">
+  <meta name="apple-mobile-web-app-title" content="Serov.Dev">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>flutter_previewer</title>
+  <title>Плагиатор Про</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+
+  <!-- Lottie Web -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js"></script>
+
   <link rel="manifest" href="manifest.json">
+  <!-- <meta name="theme-color" content="#000000FF"> -->
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      transform: translate3d(0, 0, 0); /* Force GPU acceleration */
+      will-change: transform;
+    }
+
+    * {
+      -webkit-user-select: none;
+      /* Safari */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* IE 10 and Edge */
+      user-select: none;
+      caret-color: rgba(255, 255, 255, 0) !important;
+    }
+
+    #eruda {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      z-index: 99999;
+    }
+
+    .spinner-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* Full viewport height */
+      margin: 0;
+    }
+  </style>
 </head>
+
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <div class="spinner-container">
+    <div id="lottie-animation" style="width: 35vw; height: 35vw;"></div>
+  </div>
+
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+
+    (function () {
+      let resizeTimeout;
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', () => {
+          /// попытка пофиксить корявый ресайз при появлении клавиатуры
+          /// Отложенный resize — через 1 секунду после последнего события
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+          }, 1000);
+        });
+      } else {
+        console.warn('[KeyboardFix] visualViewport is not supported');
+      }
+    })();
+
+    function isIOS() {
+      return /iPhone|iPad|iPod|iOS/i.test(navigator.userAgent);
+    }
+
+    function getUserAgent() {
+      return navigator.userAgent;
+    }
+
+    function openLink(url) {
+      Telegram.WebApp.openLink(url, { try_instant_view: false });
+    }
+
+    function openTelegramLink(url) {
+      Telegram.WebApp.openTelegramLink(url);
+    }
+
+    function initializeFlutter() {
+      _flutter.loader.load({
+        onEntrypointLoaded: async function (engineInitializer) {
+          let loading = document.querySelector('#lottie-animation');
+          let config = {
+            renderer: 'canvaskit',
+          }
+          let appRunner = await engineInitializer.initializeEngine(config);
+          if (loading) loading.remove();
+          await appRunner.runApp();
+        }
+      });
+    }
+
+    let telegramUserData = null;
+    function onAuth() {
+      const telegramUser = Telegram.WebApp.initData;
+      if (telegramUser) {
+        telegramUserData = telegramUser;
+      } else {
+        telegramUserData = ""
+      }
+    }
+
+    function setHeaderColor(color) {
+      if (telegramUserData) {
+        Telegram.WebApp.setHeaderColor(color);
+      } else {
+        let metaTag = document.querySelector('meta[name="theme-color"]');
+        if (!metaTag) {
+          metaTag = document.createElement('meta');
+          metaTag.name = 'theme-color';
+          document.head.appendChild(metaTag);
+        }
+        metaTag.content = color;
+      }
+    }
+
+    function getCodeFromUrl() {
+      const url = new URL(window.location);
+      const params = new URLSearchParams(url.search);
+      return params.get('code'); 
+    }
+
+    function setBackgroundColor(color) {
+      Telegram.WebApp.setBackgroundColor(color);
+    }
+
+    function getPlatform() {
+      return Telegram.WebApp.platform;
+    }
+
+    function getColorScheme() {
+      return Telegram.WebApp.colorScheme;
+    }
+
+    function getAuthData() {
+      if (typeof telegramUserData === 'string') {
+        return telegramUserData;
+      }
+      return JSON.stringify(telegramUserData);
+    }
+
+    /// https://core.telegram.org/bots/webapps#hapticfeedback
+    function hapticFeedbackImpact(value) {
+      var hapticFeedback = Telegram.WebApp.HapticFeedback;
+      if (hapticFeedback) {
+        // - heavy, indicates a collision between large or heavyweight UI objects,
+        // - rigid, indicates a collision between hard or inflexible UI objects,
+        // - soft, indicates a collision between soft or flexible UI objects.
+        hapticFeedback.impactOccurred(value);
+      }
+    }
+
+    function hapticFeedbackNotification(type) {
+      var hapticFeedback = Telegram.WebApp.HapticFeedback;
+      if (hapticFeedback) {
+        // - error, indicates that a task or action has failed,
+        // - success, indicates that a task or action has completed successfully,
+        // - warning, indicates that a task or action produced a warning.
+        hapticFeedback.notificationOccurred(type);
+      }
+    }
+
+    function hapticFeedbackSelectionChanged() {
+      var hapticFeedback = Telegram.WebApp.HapticFeedback;
+      if (hapticFeedback) {
+        hapticFeedback.selectionChanged();
+      }
+    }
+
+    function toggleBackButton(isEnabled) {
+      /// https://core.telegram.org/bots/webapps#backbutton
+      var backButton = Telegram.WebApp.BackButton;
+      if (backButton) {
+        if (isEnabled) {
+          if (globalThis.onBackButtonPressed) {
+            backButton.onClick(globalThis.onBackButtonPressed)
+          }
+          backButton.show();
+        } else {
+          if (globalThis.onBackButtonPressed) {
+            backButton.offClick(globalThis.onBackButtonPressed);
+          }
+          backButton.hide();
+        }
+      }
+    }
+
+    function lockOrientation() {
+      Telegram.WebApp.lockOrientation();
+    }
+
+    function initializeTelegramApp() {
+      Telegram.WebApp.disableVerticalSwipes();
+      Telegram.WebApp.enableClosingConfirmation();
+      Telegram.WebApp.ready();
+      Telegram.WebApp.expand();
+      lockOrientation();
+      onAuth();
+    }
+
+    function loadLottieAnimation() {
+      const animation = lottie.loadAnimation({
+        container: document.getElementById('lottie-animation'),
+        path: 'assets/developer.json',
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+      });
+    }
+
+    if (document.readyState === "complete") {
+      initializeFlutter();
+      initializeTelegramApp();
+      loadLottieAnimation();
+    } else {
+      window.onload = () => {
+        initializeFlutter();
+        initializeTelegramApp();
+        loadLottieAnimation();
+      };
+    }
+  </script>
 </body>
+
 </html>
