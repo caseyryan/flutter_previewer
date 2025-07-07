@@ -1,3 +1,5 @@
 include: package:flutter_lints/flutter.yaml
 
-trailing_commas: preserve
+formatter:
+  trailing_commas: preserve
+  page_width: 80
