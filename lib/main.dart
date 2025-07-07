@@ -3,6 +3,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter_previewer/constants.dart';
 import 'package:flutter_previewer/controllers/project_controller.dart';
 import 'package:flutter_previewer/localization/translator_builder.dart';
+import 'package:flutter_previewer/project_selection_view/back_to_project_section.dart';
 import 'package:flutter_previewer/project_selection_view/project_selection_view.dart';
 import 'package:flutter_previewer/themes/themes.dart';
 import 'package:lite_state/lite_state.dart';
@@ -45,8 +46,16 @@ class _MainAppState extends State<MainApp> {
             Expanded(
               child: DevicePreview(
                 enabled: true,
-                isToolbarVisible: true,
+                isToolbarVisible: controller.isToolbarVisible,
                 backgroundColor: Colors.white,
+                tools: [
+                  BackToProjectList(
+                    onPressed: () {
+                      controller.selectProject(null);
+                    },
+                  ),
+                  ...DevicePreview.defaultTools,
+                ],
                 builder: (context) {
                   final store = context.read<DevicePreviewStore>();
                   try {
@@ -62,37 +71,9 @@ class _MainAppState extends State<MainApp> {
                     builder: DevicePreview.appBuilder,
                     theme: lightTheme,
                     darkTheme: darkTheme,
-                    home: Scaffold(
-                      appBar: AppBar(),
-                    ),
+                    home: controller.selectedProject!.builder(context),
                   );
                 },
-              ),
-            ),
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Container(
-                height: 30.0 + 44.0,
-                width: double.infinity,
-                color: Colors.transparent,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          controller.selectProject(null);
-                        },
-                        child: Text(
-                          'Back To Project List'.translate(),
-                          style: TextStyle(fontSize: 14.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 44.0,
-                    ),
-                  ],
-                ),
               ),
             ),
           ],

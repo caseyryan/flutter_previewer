@@ -25,6 +25,19 @@ class ProjectController extends LiteStateController<ProjectController> {
     ),
   ];
 
+  bool _isToolbarVisible = true;
+  bool get isToolbarVisible => _isToolbarVisible;
+
+  void showToolbar() {
+    _isToolbarVisible = true;
+    rebuild('mainBuilder');
+  }
+
+  void hideToolbar() {
+    _isToolbarVisible = false;
+    rebuild('mainBuilder');
+  }
+
   bool _isFrameEnabled = false;
   bool get isFrameEnabled => _isFrameEnabled;
 

@@ -18,7 +18,7 @@ class CustomLightTheme {
         ),
         primaryColor: customPrimaryColor,
         primaryColorLight: customPrimaryColor.withValues(alpha: .1),
-        scaffoldBackgroundColor: const Color(0xfff9fafb),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
         cardColor: Colors.white,
         highlightColor: Colors.transparent,
         splashColor: const Color.fromARGB(19, 0, 0, 0),

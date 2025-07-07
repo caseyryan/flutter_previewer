@@ -3,6 +3,7 @@ import 'package:flutter_previewer/constants.dart';
 import 'package:flutter_previewer/controllers/project_controller.dart';
 import 'package:flutter_previewer/localization/translator_builder.dart';
 import 'package:flutter_previewer/widgets/header.dart';
+import 'package:flutter_previewer/widgets/tg_appbar.dart';
 import 'package:lite_state/lite_state.dart';
 
 import 'project_card.dart';
@@ -23,10 +24,11 @@ class _ProjectSelectionViewState extends State<ProjectSelectionView> {
       builderName: 'projectSelectionViewBuilder',
       builder: (BuildContext c, ProjectController controller) {
         return Scaffold(
-          appBar: AppBar(
+          appBar: TgAppBar(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             elevation: 0.0,
             scrolledUnderElevation: 2.0,
+            centerTitle: true,
             title: Header(
               text: 'PROJECTS'.translate(),
             ),
