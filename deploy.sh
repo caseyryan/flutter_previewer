@@ -7,7 +7,7 @@ BUILD_DIR="build/web"
 DEPLOY_DIR="docs"
 
 echo "▶️ Building Flutter Web..."
-flutter build web --base-href="/$REPO_NAME/"
+fvm flutter build web --base-href="/$REPO_NAME/"
 
 echo "🚮 Cleaning previous docs..."
 rm -rf $DEPLOY_DIR
