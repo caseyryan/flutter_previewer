@@ -64,6 +64,20 @@ class ProjectController extends LiteStateController<ProjectController> {
     }
   }
 
+  void resetCardSize() {
+    _cardSize = null;
+    rebuild();
+  }
+
+  int _numColumns = 2;
+  void updateNumColumns(int value) {
+    if (value != _numColumns) {
+      resetCardSize();
+    }
+    _numColumns = value;
+    rebuild();
+  }
+
   double get cardAspectRatio {
     if (_cardSize == null) {
       return 3.0 / 4.0;

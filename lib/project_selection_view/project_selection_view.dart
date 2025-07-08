@@ -39,10 +39,13 @@ class _ProjectSelectionViewState extends State<ProjectSelectionView> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     const maxWidth = 800.0;
+    final width = min(maxWidth, size.width);
 
     return LiteState<ProjectController>(
       builderName: 'projectSelectionViewBuilder',
       builder: (BuildContext c, ProjectController controller) {
+        final childCount = width < 800.0 ? 1 : 2;
+        controller.updateNumColumns(childCount);
         return Scaffold(
           appBar: TgAppBar(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -59,11 +62,11 @@ class _ProjectSelectionViewState extends State<ProjectSelectionView> {
             children: [
               ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth: min(maxWidth, size.width),
+                  maxWidth: width,
                 ),
                 child: GridView.custom(
                   gridDelegate: SliverWovenGridDelegate.count(
-                    crossAxisCount: size.width < 800.0 ? 1 : 2,
+                    crossAxisCount: childCount,
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 8,
                     pattern: [
