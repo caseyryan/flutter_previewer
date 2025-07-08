@@ -26,15 +26,6 @@ class BackToProjectList extends StatelessWidget {
           ),
           onTap: onPressed,
         ),
-        // if (isTelegramMiniApp || kDebugMode)
-        //   ListTile(
-        //     key: const Key('disable-toolbar'),
-        //     title: Text('Hide Toolbar'.translate()),
-        //     trailing: Icon(
-        //       Icons.hide_source_rounded,
-        //     ),
-        //     onTap: projectController.hideToolbar,
-        //   ),
       ],
     );
   }

@@ -71,8 +71,8 @@ class _MainAppState extends State<MainApp> {
                           // ignore: deprecated_member_use
                           useInheritedMediaQuery: true,
                           debugShowCheckedModeBanner: true,
-                          locale: DevicePreview.locale(context),
-                          builder: DevicePreview.appBuilder,
+                          // locale: DevicePreview.locale(context),
+                          // builder: DevicePreview.appBuilder,
                           theme: lightTheme,
                           darkTheme: darkTheme,
                           home: controller.selectedProject!.builder(context),
