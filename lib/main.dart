@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter_previewer/constants.dart';
 import 'package:flutter_previewer/controllers/project_controller.dart';
-import 'package:flutter_previewer/localization/translator_builder.dart';
 import 'package:flutter_previewer/project_selection_view/back_to_project_section.dart';
 import 'package:flutter_previewer/project_selection_view/project_selection_view.dart';
 import 'package:flutter_previewer/themes/themes.dart';
