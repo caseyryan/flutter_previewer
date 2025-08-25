@@ -34,6 +34,7 @@ migrate_working_dir/
 /build/
 secrets.md
 projects/**
+!projects/ecommerce_001
 
 # Symbolication related
 app.*.symbols
