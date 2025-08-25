@@ -27,7 +27,6 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
           ),
           primaryColor: accentColor,
           primaryColorDark: accentColor,
-          indicatorColor: accentColor,
           highlightColor: accentColor.withAlpha((0.1 * 255).round()),
           sliderTheme: base.sliderTheme.copyWith(
             thumbColor: accentColor,
@@ -40,17 +39,21 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
         );
       case DevicePreviewToolBarThemeData.light:
         final base = ThemeData.light();
-        const accentColor = Colors.black;
-        const barColor = Color(0xFF303030);
+        const accentColor = Color.fromARGB(255, 143, 10, 180);
+        const barColor = Color.fromARGB(255, 255, 255, 255);
         return base.copyWith(
           colorScheme: const ColorScheme.light(
             primary: accentColor,
             secondary: accentColor,
+            surface: Colors.white
           ),
+          
+          canvasColor: Colors.white,
+          scaffoldBackgroundColor: Colors.white,
+          splashColor: accentColor.withValues(alpha: .02),
+          highlightColor: Colors.transparent,
           primaryColor: accentColor,
           primaryColorDark: accentColor,
-          indicatorColor: accentColor,
-          highlightColor: accentColor,
           appBarTheme: base.appBarTheme.copyWith(
             color: barColor,
           ),

@@ -10,10 +10,10 @@ class ToolPanel extends StatelessWidget {
   /// The [isModal] indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
   const ToolPanel({
-    Key? key,
+    super.key,
     required this.slivers,
     this.isModal = false,
-  }) : super(key: key);
+  });
 
   /// Indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
@@ -74,17 +74,21 @@ class _ToolPanel extends StatelessWidget {
     final isEnabled = context.select(
       (DevicePreviewStore store) => store.data.isEnabled,
     );
-
+    final isLight = theme.colorScheme.brightness == Brightness.light;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
+        scrolledUnderElevation: 1.0,
+        surfaceTintColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         title: Text(
-          'Device preview',
+          '',
           style: theme.textTheme.titleLarge?.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: (theme.colorScheme.brightness == Brightness.dark
+            color: !isLight
                 ? theme.colorScheme.onSurface
-                : theme.colorScheme.onPrimary),
+                : theme.colorScheme.onPrimary,
           ),
         ),
         leading: isModal

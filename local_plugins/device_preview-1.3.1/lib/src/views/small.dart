@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
@@ -43,15 +44,9 @@ class DevicePreviewSmallLayout extends StatelessWidget {
           showPanel: () async {
             onMenuVisibleChanged(true);
             final sheet = scaffoldKey.currentState?.showBottomSheet(
-              (context) => ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: ToolPanel(
-                  isModal: true,
-                  slivers: slivers,
-                ),
+              (context) => ToolPanel(
+                isModal: true,
+                slivers: slivers,
               ),
               constraints: BoxConstraints(
                 maxHeight: maxMenuHeight,
@@ -83,12 +78,15 @@ class _BottomToolbar extends StatelessWidget {
       child: ListTile(
         title: const Text('Device Preview'),
         onTap: isEnabled ? showPanel : null,
+        // onTap: showPanel,
         leading: const Icon(Icons.tune),
         trailing: Switch(
           value: isEnabled,
           onChanged: (v) {
             final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(isEnabled: v);
+            state.data = state.data.copyWith(
+              isEnabled: v,
+            );
           },
         ),
       ),

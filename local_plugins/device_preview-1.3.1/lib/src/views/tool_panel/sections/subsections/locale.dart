@@ -29,6 +29,7 @@ class LocalePickerState extends State<LocalePicker> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Locale'),
+        // backgroundColor: Colors.transparent,
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10.0),

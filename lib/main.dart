@@ -46,7 +46,7 @@ class _MainAppState extends State<MainApp> {
               child: DevicePreview(
                 enabled: true,
                 isToolbarVisible: controller.isToolbarVisible,
-                backgroundColor: Colors.white,
+                // backgroundColor: Colors.blue,
                 tools: [
                   BackToProjectList(
                     onPressed: () {
