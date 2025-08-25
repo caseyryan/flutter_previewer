@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
@@ -76,10 +77,21 @@ class _BottomToolbar extends StatelessWidget {
     );
     return Material(
       child: ListTile(
-        title: const Text('Device Preview'),
-        onTap: isEnabled ? showPanel : null,
+        title: isEnabled
+            ? Text('Открыть Меню'.translate())
+            : Text('Включить Рамку'.translate()),
+        onTap: isEnabled
+            ? showPanel
+            : () {
+                final state = context.read<DevicePreviewStore>();
+                state.data = state.data.copyWith(
+                  isEnabled: true,
+                );
+              },
         // onTap: showPanel,
-        leading: const Icon(Icons.tune),
+        leading: isEnabled
+            ? const Icon(Icons.tune)
+            : const Icon(Icons.phone_android),
         trailing: Switch(
           value: isEnabled,
           onChanged: (v) {

@@ -8,7 +8,15 @@ extension ThemeBackgroundExtension on DevicePreviewBackgroundThemeData {
       case DevicePreviewBackgroundThemeData.dark:
         return ThemeData.dark();
       case DevicePreviewBackgroundThemeData.light:
-        return ThemeData.light();
+        // final backgroundColor = const Color.fromARGB(255, 250, 250, 250);
+        final backgroundColor = Colors.white;
+
+        /// цвет фона под рамкой
+        return ThemeData.light().copyWith(
+          scaffoldBackgroundColor: backgroundColor,
+          canvasColor: backgroundColor,
+          cardColor: backgroundColor,
+        );
     }
   }
 }
@@ -39,17 +47,18 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
         );
       case DevicePreviewToolBarThemeData.light:
         final base = ThemeData.light();
-        const accentColor = Color.fromARGB(255, 143, 10, 180);
-        const barColor = Color.fromARGB(255, 255, 255, 255);
+        const accentColor = Color.fromARGB(255, 10, 126, 180);
+        // const barColor = Color.fromARGB(255, 255, 255, 255);
+        const barColor = Color.fromARGB(255, 252, 252, 252);
         return base.copyWith(
           colorScheme: const ColorScheme.light(
             primary: accentColor,
             secondary: accentColor,
-            surface: Colors.white
+            surface: barColor,
           ),
-          
-          canvasColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
+
+          canvasColor: barColor,
+          scaffoldBackgroundColor: barColor,
           splashColor: accentColor.withValues(alpha: .02),
           highlightColor: Colors.transparent,
           primaryColor: accentColor,

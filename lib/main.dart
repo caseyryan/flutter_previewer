@@ -8,6 +8,8 @@ import 'package:flutter_previewer/web_utils/web_utils.dart';
 import 'package:lite_state/lite_state.dart';
 import 'package:provider/provider.dart';
 
+import 'controllers/previewer_theme_controller.dart';
+
 void main() {
   runApp(MainApp());
 }
@@ -22,7 +24,12 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   void initState() {
-    initControllers({ProjectController: () => ProjectController()});
+    initControllers(
+      {
+        ProjectController: () => ProjectController(),
+        PreviewerThemeController: () => PreviewerThemeController(),
+      },
+    );
     super.initState();
   }
 
@@ -39,53 +46,61 @@ class _MainAppState extends State<MainApp> {
             home: ProjectSelectionView(),
           );
         }
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: DevicePreview(
-                enabled: true,
-                isToolbarVisible: controller.isToolbarVisible,
-                // backgroundColor: Colors.blue,
-                tools: [
-                  BackToProjectList(
-                    onPressed: () {
-                      controller.selectProject(null);
-                    },
-                  ),
-                  ...DevicePreview.defaultTools,
-                ],
-                builder: (context) {
-                  try {
-                    final store = context.read<DevicePreviewStore>();
-                    final isEnabled = store.data.isEnabled;
-                    controller.setFrameEnabled(isEnabled);
-                    // debugPrint('isEnabled: $isEnabled');
-                  } catch (_) {}
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: MaterialApp(
-                          // ignore: deprecated_member_use
-                          useInheritedMediaQuery: true,
-                          debugShowCheckedModeBanner: true,
-                          // locale: DevicePreview.locale(context),
-                          // builder: DevicePreview.appBuilder,
-                          theme: lightTheme,
-                          darkTheme: darkTheme,
-                          home: controller.selectedProject!.builder(context),
+        return Theme(
+          data: themeController.isDarkTheme ? darkTheme : lightTheme,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: LiteState<PreviewerThemeController>(
+                  builder: (BuildContext c, PreviewerThemeController themeController) {
+                    return DevicePreview(
+                      enabled: true,
+                      isToolbarVisible: controller.isToolbarVisible,
+                      tools: [
+                        BackToProjectList(
+                          onPressed: () {
+                            controller.selectProject(null);
+                          },
                         ),
-                      ),
-                      if (WebUtils.isWebIos)
-                        const SizedBox(
-                          height: 44.0,
-                        ),
-                    ],
-                  );
-                },
+                        ...DevicePreview.defaultTools,
+                      ],
+                      builder: (context) {
+                        try {
+                          final store = context.read<DevicePreviewStore>();
+                          final isEnabled = store.data.isEnabled;
+                          controller.setFrameEnabled(isEnabled);
+                          // debugPrint('isEnabled: $isEnabled');
+                        } catch (_) {}
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: MaterialApp(
+                                // ignore: deprecated_member_use
+                                useInheritedMediaQuery: true,
+                                debugShowCheckedModeBanner: true,
+                                // locale: DevicePreview.locale(context),
+                                // builder: DevicePreview.appBuilder,
+                                theme: lightTheme,
+                                darkTheme: darkTheme,
+                                home: controller.selectedProject!.builder(
+                                  context,
+                                ),
+                              ),
+                            ),
+                            if (WebUtils.isWebIos)
+                              const SizedBox(
+                                height: 44.0,
+                              ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

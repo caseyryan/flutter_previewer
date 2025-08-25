@@ -161,33 +161,6 @@ class DevicePreview extends StatefulWidget {
     return VisualDensity.standard;
   }
 
-  /// Create a new [ThemeData] from the given [data], but with updated properties from
-  /// the currently simulated device.
-  static Widget appBuilder(BuildContext context, Widget? child) {
-    if (!_isEnabled(context)) {
-      return child!;
-    }
-
-    final theme = Theme.of(context);
-    final isInitializedAndEnabled = context.select(
-      (DevicePreviewStore store) => store.state.maybeMap(
-        initialized: (initialized) => initialized.data.isEnabled,
-        orElse: () => false,
-      ),
-    );
-
-    if (!isInitializedAndEnabled) {
-      return child!;
-    }
-
-    return Theme(
-      data: theme.copyWith(
-        platform: platform(context),
-        visualDensity: visualDensity(context),
-      ),
-      child: child!,
-    );
-  }
 
   /// Indicates whether the device preview is currently enabled.
   static bool isEnabled(BuildContext context) {
@@ -431,9 +404,9 @@ class _DevicePreviewState extends State<DevicePreview> {
     final isDarkMode = context.select(
       (DevicePreviewStore store) => store.data.isDarkMode,
     );
-
     return Container(
       color: widget.backgroundColor ?? theme.canvasColor,
+      // color: Colors.red,
       // это паддинг вокруг рамки девайса
       padding:
           widget.padding ??
@@ -454,7 +427,7 @@ class _DevicePreviewState extends State<DevicePreview> {
             screen: VirtualKeyboard(
               isEnabled: isVirtualKeyboardVisible,
               child: Theme(
-                data: Theme.of(context).copyWith(
+                data: theme.copyWith(
                   platform: device.identifier.platform,
                   brightness: isDarkMode ? Brightness.dark : Brightness.light,
                 ),

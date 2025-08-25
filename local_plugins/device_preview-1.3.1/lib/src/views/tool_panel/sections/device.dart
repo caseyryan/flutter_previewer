@@ -1,3 +1,4 @@
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/sections/subsections/device_model.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dart';
@@ -59,12 +60,12 @@ class DeviceSection extends StatelessWidget {
     );
 
     return ToolPanelSection(
-      title: 'Device',
+      title: 'Устройство'.translate(),
       children: [
         if (model)
           ListTile(
             key: const Key('model'),
-            title: const Text('Model'),
+            title: Text('Модель'.translate()),
             subtitle: Text(deviceName),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
@@ -97,14 +98,14 @@ class DeviceSection extends StatelessWidget {
         if (this.orientation && canRotate)
           ListTile(
             key: const Key('orientation'),
-            title: const Text('Orientation'),
+            title: Text('Ориентация'.translate()),
             subtitle: Text(
               () {
                 switch (orientation) {
                   case Orientation.landscape:
-                    return 'Landscape';
+                    return 'Ландшафт'.translate();
                   case Orientation.portrait:
-                    return 'Portrait';
+                    return 'Портрет'.translate();
                 }
               }(),
             ),
@@ -124,8 +125,10 @@ class DeviceSection extends StatelessWidget {
         if (frameVisibility)
           ListTile(
             key: const Key('frame'),
-            title: const Text('Frame visibility'),
-            subtitle: Text(isFrameVisible ? 'Visible' : 'Hidden'),
+            title: Text('Видимость рамки'.translate()),
+            subtitle: Text(
+              isFrameVisible ? 'Показать'.translate() : 'Скрыть'.translate(),
+            ),
             trailing: Opacity(
               opacity: isFrameVisible ? 1.0 : 0.3,
               child: Icon(
@@ -142,8 +145,12 @@ class DeviceSection extends StatelessWidget {
         if (virtualKeyboard)
           ListTile(
             key: const Key('keyboard'),
-            title: const Text('Virtual keyboard preview'),
-            subtitle: Text(isVirtualKeyboardVisible ? 'Visible' : 'Hidden'),
+            title: Text('Виртуальная клавиатура'.translate()),
+            subtitle: Text(
+              isVirtualKeyboardVisible
+                  ? 'Показать'.translate()
+                  : 'Скрыть'.translate(),
+            ),
             trailing: Opacity(
               opacity: isVirtualKeyboardVisible ? 1.0 : 0.3,
               child: Icon(

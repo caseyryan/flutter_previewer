@@ -13,11 +13,11 @@ class BackToProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ToolPanelSection(
-      title: 'PROJECT PREVIEW'.translate(),
+      title: 'Главная'.translate(),
       children: [
         ListTile(
           key: const Key('back-to-projects'),
-          title: Text('Back To Project List'.translate()),
+          title: Text('Назад к Списку Проектов'.translate()),
           trailing: Icon(
             Icons.list,
           ),

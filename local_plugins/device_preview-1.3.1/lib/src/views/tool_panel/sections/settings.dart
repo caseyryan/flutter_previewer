@@ -66,8 +66,8 @@ class SettingsSection extends StatelessWidget {
           ),
         if (toolsTheme)
           ListTile(
-            key: const Key('toolbar-theme'),
-            title: const Text('Tools theme'),
+            key: Key('toolbar-theme'),
+            title: Text('Tools theme'),
             subtitle: Text(
               toolbarTheme == DevicePreviewToolBarThemeData.dark
                   ? 'Dark'
