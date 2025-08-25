@@ -57,7 +57,7 @@ class _MainAppState extends State<MainApp> {
                   builder: (BuildContext c, PreviewerThemeController themeController) {
                     selectedLocale = themeController.locale;
                     return DevicePreview(
-                      
+                      selectedLocale: selectedLocale,
                       enabled: true,
                       isToolbarVisible: controller.isToolbarVisible,
                       tools: [
