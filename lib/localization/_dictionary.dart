@@ -5,6 +5,7 @@ part of 'translator_builder.dart';
 /// Так как тексты будут возвращаться в неизменном виде
 const _dictionary = {
   'en': {
+    'Назад к Списку Проектов': 'Back to Project List',
     'Отмена': 'Cancel',
     'Готово': 'Done',
     'Главная': 'Main',

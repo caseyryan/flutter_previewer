@@ -145,7 +145,7 @@ class AndroidDevices {
   DeviceInfo get largeTablet => _largeTablet;
   static final _largeTablet = DeviceInfo.genericTablet(
     platform: TargetPlatform.android,
-    name: 'Large',
+    name: 'Большой',
     id: 'large',
     screenSize: const Size(1280, 1880),
     safeAreas: const EdgeInsets.only(

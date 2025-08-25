@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:device_frame/device_frame.dart';
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/storage/storage.dart';
@@ -61,10 +62,10 @@ class DevicePreview extends StatefulWidget {
     this.enabled = true,
     this.backgroundColor,
     this.padding,
-    this.simpleLocale = 'en',
+    this.selectedLocale = 'en',
   });
 
-  final String simpleLocale;
+  final String selectedLocale;
 
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
@@ -117,8 +118,13 @@ class DevicePreview extends StatefulWidget {
     //   locale: false,
     //   theme: false,
     // ),
-    AccessibilitySection(),
+    // AccessibilitySection(),
     SettingsSection(),
+    SliverToBoxAdapter(
+      child: SizedBox(
+        height: 44.0,
+      ),
+    ),
   ];
 
   /// Additional bounding box surrounding the application preview.
@@ -160,7 +166,6 @@ class DevicePreview extends StatefulWidget {
     }
     return VisualDensity.standard;
   }
-
 
   /// Indicates whether the device preview is currently enabled.
   static bool isEnabled(BuildContext context) {
@@ -366,6 +371,7 @@ class _DevicePreviewState extends State<DevicePreview> {
   @override
   void initState() {
     _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
+    selectedLocale = widget.selectedLocale;
     super.initState();
   }
 

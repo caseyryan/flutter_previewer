@@ -1,4 +1,5 @@
 import 'package:device_frame/device_frame.dart';
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
@@ -59,7 +60,7 @@ class _DeviceModelPickerState extends State<DeviceModelPicker>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Device model'),
+        title: Text('Модель устройства'.translate()),
         bottom: TabBar(
           controller: controller,
           isScrollable: true,
@@ -70,9 +71,9 @@ class _DeviceModelPickerState extends State<DeviceModelPicker>
                 text: e.name,
               ),
             ),
-            const Tab(
+            Tab(
               icon: Icon(Icons.tune),
-              text: 'Custom',
+              text: 'Своё'.translate(),
             ),
           ],
         ),
@@ -107,20 +108,23 @@ class _PlatformModelPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final devices = context.select(
-      (DevicePreviewStore store) => store.devices
-          .where(
-            (x) => platform == x.identifier.platform,
-          )
-          .toList()
-        ..sort((x, y) {
-          final result = x.screenSize.width.compareTo(y.screenSize.width);
-          return result == 0
-              ? x.screenSize.height.compareTo(y.screenSize.height)
-              : result;
-        }),
+      (DevicePreviewStore store) =>
+          store.devices
+              .where(
+                (x) => platform == x.identifier.platform,
+              )
+              .toList()
+            ..sort((x, y) {
+              final result = x.screenSize.width.compareTo(y.screenSize.width);
+              return result == 0
+                  ? x.screenSize.height.compareTo(y.screenSize.height)
+                  : result;
+            }),
     );
-    final byDeviceType =
-        groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
+    final byDeviceType = groupBy<DeviceInfo, DeviceType>(
+      devices,
+      (d) => d.identifier.type,
+    );
     return ListView(
       children: [
         ...byDeviceType.entries
@@ -137,6 +141,9 @@ class _PlatformModelPicker extends StatelessWidget {
               ],
             )
             .expand((x) => x),
+        SizedBox(
+          height: 44.0,
+        ),
       ],
     );
   }
@@ -158,18 +165,17 @@ class _TypeSectionHeader extends StatelessWidget {
         () {
           switch (type) {
             case DeviceType.tablet:
-              return 'Tablet';
+              return 'Планшет'.translate();
             case DeviceType.desktop:
-              return 'Desktop';
+              return 'Десктоп'.translate();
             case DeviceType.tv:
-              return 'TV';
+              return 'ТВ'.translate();
             case DeviceType.laptop:
-              return 'Laptop';
+              return 'Ноутбук'.translate();
             default:
-              return 'Phone';
+              return 'Телефон'.translate();
           }
-        }()
-            .toUpperCase(),
+        }().toUpperCase(),
         style: theme.textTheme.titleSmall?.copyWith(
           color: theme.hintColor,
         ),

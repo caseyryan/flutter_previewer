@@ -1,6 +1,6 @@
 part '_dictionary.dart';
 
-String get selectedLocale => 'ru';
+String selectedLocale = 'en';
 
 /// это только для форм!!!
 String? translatorBuilder(String? value) {

@@ -1,3 +1,4 @@
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/sections/subsections/locale.dart';
 import 'package:flutter/material.dart';
@@ -42,12 +43,12 @@ class SystemSection extends StatelessWidget {
     );
 
     return ToolPanelSection(
-      title: 'System',
+      title: 'Система'.translate(),
       children: [
         if (locale)
           ListTile(
             key: const Key('locale'),
-            title: const Text('Locale'),
+            title: Text('Язык'.translate()),
             subtitle: Text(selectedLocale.name),
             trailing: const Row(
               mainAxisSize: MainAxisSize.min,

@@ -28,10 +28,17 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
       case DevicePreviewToolBarThemeData.dark:
         final base = ThemeData.dark();
         const accentColor = Colors.white;
+        final bgColor = const Color.fromARGB(255, 46, 46, 46);
         return base.copyWith(
           colorScheme: const ColorScheme.dark(
             primary: accentColor,
             secondary: accentColor,
+          ),
+          scaffoldBackgroundColor: bgColor,
+          canvasColor: bgColor,
+          cardColor: bgColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: bgColor
           ),
           primaryColor: accentColor,
           primaryColorDark: accentColor,
@@ -49,7 +56,7 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
         final base = ThemeData.light();
         const accentColor = Color.fromARGB(255, 10, 126, 180);
         // const barColor = Color.fromARGB(255, 255, 255, 255);
-        const barColor = Color.fromARGB(255, 252, 252, 252);
+        const barColor = Color.fromARGB(255, 246, 246, 246);
         return base.copyWith(
           colorScheme: const ColorScheme.light(
             primary: accentColor,

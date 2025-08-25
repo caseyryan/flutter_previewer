@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
+
 part '_dictionary.dart';
 
-String get selectedLocale => 'ru';
+String selectedLocale = 'en';
 
 extension TranslateStringExtension on String {
   String translate() {
@@ -8,6 +10,8 @@ extension TranslateStringExtension on String {
       final translation = _dictionary[selectedLocale]![this];
       if (translation != null) {
         return translation;
+      } else {
+        debugPrint('NOT TRANSLATED>>$this');
       }
     }
     return this;

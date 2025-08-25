@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:ecommerce_001/localization/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_state/lite_state.dart';
 
@@ -7,14 +8,28 @@ PreviewerThemeController get themeController {
   return findController<PreviewerThemeController>();
 }
 
-class PreviewerThemeController extends LiteStateController<PreviewerThemeController> {
-  PreviewerThemeController() : super(preserveLocalStorageOnControllerDispose: true);
+class PreviewerThemeController
+    extends LiteStateController<PreviewerThemeController> {
+  PreviewerThemeController()
+    : super(preserveLocalStorageOnControllerDispose: true);
 
   ThemeMode get themeMode {
     return isDarkTheme ? ThemeMode.dark : ThemeMode.light;
   }
 
   bool _hasSetTelegramColors = false;
+
+  String _locale = 'ru';
+  String get locale => _locale;
+
+  void setSelectedLocale(String value) {
+    final supportedLocales = ['en', 'ru'];
+    if (supportedLocales.contains(value)) {
+      _locale = value;
+      selectedLocale = value;
+      rebuild();
+    }
+  }
 
   /// если это не true, то будет по умолчанию при каждом запуске ставить тему из телеги
   bool get hasSetCustomColorScheme {
@@ -31,7 +46,7 @@ class PreviewerThemeController extends LiteStateController<PreviewerThemeControl
     }
     _hasSetTelegramColors = true;
     // WebUtils.headerColor =
-        // isDarkTheme ? darkTheme.appBarTheme.backgroundColor! : lightTheme.appBarTheme.backgroundColor!;
+    // isDarkTheme ? darkTheme.appBarTheme.backgroundColor! : lightTheme.appBarTheme.backgroundColor!;
   }
 
   Brightness get brightness {

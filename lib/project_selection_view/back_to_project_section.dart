@@ -17,7 +17,9 @@ class BackToProjectList extends StatelessWidget {
       children: [
         ListTile(
           key: const Key('back-to-projects'),
-          title: Text('Назад к Списку Проектов'.translate()),
+          title: Text(
+            'Назад к Списку Проектов'.translate(),
+          ),
           trailing: Icon(
             Icons.list,
           ),

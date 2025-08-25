@@ -91,14 +91,6 @@ class _ExampleAppState extends State<ExampleApp> {
                   },
                   icon: const Icon(Icons.keyboard),
                 ),
-                /*IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isEnabled = !isEnabled;
-                    });
-                  },
-                  icon: Icon(Icons.check),
-                ),*/
               ],
               bottom: TabBar(
                 isScrollable: true,

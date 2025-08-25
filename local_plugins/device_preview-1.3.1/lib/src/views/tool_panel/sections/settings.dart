@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,47 +32,18 @@ class SettingsSection extends StatelessWidget {
     final background = backgroundTheme.asThemeData();
     final toolbar = toolbarTheme.asThemeData();
     return ToolPanelSection(
-      title: 'Preview settings',
+      title: 'Настройки предпросмотра'.translate(),
       children: [
-        if (this.backgroundTheme)
-          ListTile(
-            key: const Key('background-theme'),
-            title: const Text('Background color'),
-            subtitle: Text(
-              backgroundTheme == DevicePreviewBackgroundThemeData.dark
-                  ? 'Dark'
-                  : 'Light',
-            ),
-            trailing: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: background.scaffoldBackgroundColor,
-                border: Border.all(
-                  color: toolbar.colorScheme.surface,
-                  width: 1,
-                ),
-              ),
-            ),
-            onTap: () {
-              final state = context.read<DevicePreviewStore>();
-              state.settings = state.settings.copyWith(
-                backgroundTheme:
-                    backgroundTheme == DevicePreviewBackgroundThemeData.dark
-                        ? DevicePreviewBackgroundThemeData.light
-                        : DevicePreviewBackgroundThemeData.dark,
-              );
-            },
-          ),
         if (toolsTheme)
           ListTile(
             key: Key('toolbar-theme'),
-            title: Text('Tools theme'),
+            title: Text(
+              'Тема Инструментов'.translate(),
+            ),
             subtitle: Text(
               toolbarTheme == DevicePreviewToolBarThemeData.dark
-                  ? 'Dark'
-                  : 'Light',
+                  ? 'Тёмная'.translate()
+                  : 'Светлая'.translate(),
             ),
             trailing: Container(
               width: 24,
@@ -91,6 +63,37 @@ class SettingsSection extends StatelessWidget {
                 toolbarTheme: toolbarTheme == DevicePreviewToolBarThemeData.dark
                     ? DevicePreviewToolBarThemeData.light
                     : DevicePreviewToolBarThemeData.dark,
+              );
+            },
+          ),
+        if (this.backgroundTheme)
+          ListTile(
+            key: const Key('background-theme'),
+            title: Text('Цвет фона'.translate()),
+            subtitle: Text(
+              backgroundTheme == DevicePreviewBackgroundThemeData.dark
+                  ? 'Тёмный'.translate()
+                  : 'Светлый'.translate(),
+            ),
+            trailing: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: background.scaffoldBackgroundColor,
+                border: Border.all(
+                  color: toolbar.colorScheme.surface,
+                  width: 1,
+                ),
+              ),
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.settings = state.settings.copyWith(
+                backgroundTheme:
+                    backgroundTheme == DevicePreviewBackgroundThemeData.dark
+                    ? DevicePreviewBackgroundThemeData.light
+                    : DevicePreviewBackgroundThemeData.dark,
               );
             },
           ),

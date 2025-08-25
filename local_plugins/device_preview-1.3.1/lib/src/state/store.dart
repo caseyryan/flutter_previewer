@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:device_preview/src/localization/translator_builder.dart';
 import 'package:flutter/widgets.dart';
 import '../../device_preview.dart';
 import 'custom_device.dart';
@@ -28,7 +29,7 @@ class DevicePreviewStore extends ChangeNotifier {
   /// The storage used to persist the states's data.
   final DevicePreviewStorage storage;
 
-  /// The curren state of the device preview.
+  /// The current state of the device preview.
   DevicePreviewState get state => _state;
 
   /// Update the state with [value] and notifies all listeners
@@ -39,9 +40,9 @@ class DevicePreviewStore extends ChangeNotifier {
   }
 
   /// The default custom device when never edited.
-  static const _defaultCustomDevice = CustomDeviceInfoData(
+  static final _defaultCustomDevice = CustomDeviceInfoData(
     id: CustomDeviceIdentifier.identifier,
-    name: 'Custom',
+    name: 'Своё'.translate(),
     pixelRatio: 2,
     platform: TargetPlatform.android,
     safeAreas: EdgeInsets.only(top: 20),
